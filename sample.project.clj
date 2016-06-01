@@ -4,7 +4,7 @@
 (defproject org.example/sample "0.1.0-SNAPSHOT"
   ;; ----- other entries omitted -----
   ;; (required) Project level usage of the lein-clr plugin is recommended
-  :plugins [[lein-clr "0.2.1"]]
+  :plugins [[lein-clr "0.2.2"]]
   ;; (optional) regular attributes used by lein-clr
   :dependencies   []  ; JAR files are decompressed and .clj files are put on load-path
   :source-paths   ["src"]
@@ -19,15 +19,15 @@
         ;; You can use them wherever you need to provide command vectors, as in the examples
         ;; in :deps-cmds, :compile-cmd and :main-cmd below. Note that only keywords correspond
         ;; to command template keys.
-        :cmd-templates  {;; uses specified file at a location pointed to by env-var CLJCLR14_40
+        :cmd-templates  {;; uses specified file at a location pointed to by env-var CLJCLR17_40
                          ;; ?PATH instructs lein-clr to ignore the token if not found in PATH
-                         :clj-exe   [[?PATH "mono"] [CLJCLR14_40 %1]]
-                         ;; uses specified file at location "target/clr/clj/Debug 4.0"
-                         :clj-dep   [[?PATH "mono"] ["target/clr/clj/Debug 4.0" %1]]
+                         :clj-exe   [[?PATH "mono"] [CLJCLR17_40 %1]]
+                         ;; uses specified file at location "target/clr/lib/Clojure.1.7.0/tools/net40"
+                         :clj-dep    [[?PATH "mono"] ["target/clr/lib/Clojure.1.7.0/tools/net40" %1]]
                          ;; ClojureCLR download URL
-                         :clj-url   "http://sourceforge.net/projects/clojureclr/files/clojure-clr-1.4.1-Debug-4.0.zip/download"
+                         :clj-url   "https://sourceforge.net/projects/clojureclr/files/latest/download"
                          ;; ClojureCLR ZIP filename after download
-                         :clj-zip   "clojure-clr-1.4.1-Debug-4.0.zip"
+                         :clj-zip   "clojure-clr-1.7.0-Release-4.0.zip"
                          ;; Fetch a file from remote-url (%2) into a local file (%1) using cURL
                          :curl      ["curl" "--insecure" "-f" "-L" "-o" %1 %2]
                          ;; Fetch specific version (%2) of a dependency (%1) using NuGet
@@ -40,14 +40,14 @@
                          :wget      ["wget" "--no-check-certificate" "--no-clobber" "-O" %1 %2]}
         ;; (optional) comands to fetch dependencies, they are run in lib folder
         ;; You can use command templates to specify those, or use ordinary command vector.
-        :deps-cmds      [;; using curl to download ClojureCLR 1.4
+        :deps-cmds      [;; using curl to download ClojureCLR 1.7
                          [:curl  :clj-zip :clj-url]
-                         ;; using wget to download ClojureCLR 1.4
+                         ;; using wget to download ClojureCLR 1.7
                          [:wget  :clj-zip :clj-url]
                          ;; unzip the downloaded ClojureCLR ZIP file
                          [:unzip "../clj" :clj-zip]
                          ;; NuGet dependency by version
-                         [:nuget-ver "NHibernate" "3.3.2.4000"]
+                         [:nuget-ver "Clojure" "1.7.0"]
                          ;; NuGet dependency (any/latest version)
                          [:nuget-any "MySQL.Data"]
                          ;; copy dependency files (for demonstration only, not recommended)
